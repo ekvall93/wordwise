@@ -18,7 +18,11 @@ def get_all_candidates(
     text: str, n_gram_range: Union[Tuple[int], List[int]]
 ) -> List[str]:
     count = CountVectorizer(ngram_range=n_gram_range, stop_words="english").fit([text])
-    all_candidates = count.get_feature_names_out()
+    try:
+        all_candidates = count.get_feature_names_out()
+    except:
+        all_candidates = count.get_feature_names()
+
     return all_candidates
 
 

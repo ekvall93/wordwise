@@ -43,9 +43,10 @@ class Extractor:
                 f"`top_k` has been adjusted because it is larger than the number of candidates."
             )
             top_k = len(distances)
-        _, indicies = torch.topk(distances, k=top_k)
+        scores, indicies = torch.topk(distances, k=top_k)
         keywords = [candidates[index] for index in indicies]
-        return keywords
+        scores = [float(score) for score in scores]
+        return keywords, scores
 
     def get_candidates(self, text: str) -> List[str]:
         nouns = self.get_nouns(text)
